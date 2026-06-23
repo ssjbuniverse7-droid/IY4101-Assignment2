@@ -2,45 +2,52 @@ public class Coordinates {
     // Properties
     private int x;
     private int y;
-    double p = getX() + getY();
 
     // Constructor
     public Coordinates(int x, int y) {
-        this.x = 0;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
     }
 
     // Getter Methods
     public int getX() {
         return this.x;
     }
-
     public int getY() {
-        return this.y;
+        return y;
     }
 
     // Distance Calculator
-    public double distance(Coordinates p1, Coordinates p2) {
-        return Math.sqrt( Math.pow( 2,2 ) + Math.pow( getY() - y,2 )); // ??
+    public double distance(Coordinates p) {
+        int distX = this.x - p.getX();
+        int distY = this.y - p.getY();
+        return Math.sqrt(distX * distX + distY * distY);
     }
 
     // Translator
     public void translator(int dx, int dy) {
-        // ??
+        this.x += dx;
+        this.y += dy;
     }
 
     // Scaler
     public void scaler(int factor, boolean sign) {
         if (sign) {
-            System.out.println("Positive scale");
+            this.x *= factor;
+            this.y *= factor;
         }
         else {
-            System.out.println("Negative scale");
+            this.x /= factor;
+            this.y /= factor;
         }
     }
 
     // Display
     public String display() {
-        return "Final Result: ";
+        String msg = "X = " + x + ", Y = " + y;
+        if (x < 0 || y < 0) {
+            msg += "\nNote: Negative X or Y, Coordinates are out of zone.\n";
+        }
+        return msg;
     }
 }
