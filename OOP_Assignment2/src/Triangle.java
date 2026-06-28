@@ -1,45 +1,72 @@
 public class Triangle extends Shape {
+
+    // Properties
     private Coordinates vertexA;
     private Coordinates vertexB;
     private Coordinates vertexC;
 
     // Constructor
-     public Triangle (Coordinates coord, double vertexA, double vertexB, double vertexC) {
-         super(3, coord);
-         this.vertexA = vertexA;
-         this.vertexB = vertexB;
-         this.vertexC = vertexC;
-     }
+    public Triangle(Coordinates a, Coordinates b, Coordinates c) {
+        super(3, a); // Triangle has 3 sides, position = vertexA
+        this.vertexA = a;
+        this.vertexB = b;
+        this.vertexC = c;
+    }
 
+    // Area using the Shoelace Formula
     @Override
     public double getArea() {
-        double s = (vertexA + vertexB + vertexC) / 2;
-        return Math.sqrt(s * (s - vertexA) * (s - vertexB) * (s - vertexC));
+        double area = Math.abs(
+                vertexA.getX() * (vertexB.getY() - vertexC.getY()) +
+                        vertexB.getX() * (vertexC.getY() - vertexA.getY()) +
+                        vertexC.getX() * (vertexA.getY() - vertexB.getY())
+        ) / 2.0;
+
+        return area;
     }
 
+    // Perimeter
     @Override
     public double getPerimeter() {
-        double distAB = vertexA - vertexB;
-        double distBC = vertexB - vertexC;
-        double distCA = vertexC - vertexA;
-        return distAB + distBC + distCA;
+        double sideAB = vertexA.distance(vertexB);
+        double sideBC = vertexB.distance(vertexC);
+        double sideCA = vertexC.distance(vertexA);
+
+        return sideAB + sideBC + sideCA;
     }
 
+    // Scale all vertices
     @Override
     public void scale(int factor, boolean sign) {
-        if (sign) {
-            this.vertexA *= factor;
-            this.vertexB *= factor;
-            this.vertexC *= factor;
-        } else {
-            this.vertexA /= factor;
-            this.vertexB /= factor;
-            this.vertexC /= factor;
-        }
+        vertexA.scale(factor, sign);
+        vertexB.scale(factor, sign);
+        vertexC.scale(factor, sign);
+
+        // Keep Shape.position synchronized with vertexA
+        position = vertexA;
     }
 
+    // Translate all vertices
+    @Override
+    public void translate(int dx, int dy) {
+        vertexA.translate(dx, dy);
+        vertexB.translate(dx, dy);
+        vertexC.translate(dx, dy);
+
+        // Keep Shape.position synchronized with vertexA
+        position = vertexA;
+    }
+
+    // Display
     @Override
     public String display() {
-        return "Triangle at " + position.display() + ", Vertices: " + vertexA + "," + vertexB + "," + vertexC;
+        String msg = "Triangle\n";
+        msg += "Vertex A: " + vertexA.display() + "\n";
+        msg += "Vertex B: " + vertexB.display() + "\n";
+        msg += "Vertex C: " + vertexC.display() + "\n";
+        msg += String.format("Area: %.2f\n", getArea());
+        msg += String.format("Perimeter: %.2f", getPerimeter());
+
+        return msg;
     }
 }
