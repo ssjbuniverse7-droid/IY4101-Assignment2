@@ -13,19 +13,18 @@ public class Triangle extends Shape {
         this.vertexC = c;
     }
 
-    // Area using the Shoelace Formula
+    // Calculate Area
     @Override
     public double getArea() {
-        double area = Math.abs(
-                vertexA.getX() * (vertexB.getY() - vertexC.getY()) +
-                        vertexB.getX() * (vertexC.getY() - vertexA.getY()) +
-                        vertexC.getX() * (vertexA.getY() - vertexB.getY())
-        ) / 2.0;
+        double area = Math.abs(vertexA.getX() * (vertexB.getY() - vertexC.getY()) +
+                               vertexB.getX() * (vertexC.getY() - vertexA.getY()) +
+                               vertexC.getX() * (vertexA.getY() - vertexB.getY())) /
+                               2.0;
 
         return area;
     }
 
-    // Perimeter
+    // Calculate Perimeter
     @Override
     public double getPerimeter() {
         double sideAB = vertexA.distance(vertexB);
@@ -35,7 +34,7 @@ public class Triangle extends Shape {
         return sideAB + sideBC + sideCA;
     }
 
-    // Scale all vertices
+    // Scale All Vertices
     @Override
     public void scale(int factor, boolean sign) {
         vertexA.scale(factor, sign);
@@ -46,18 +45,17 @@ public class Triangle extends Shape {
         position = vertexA;
     }
 
-    // Translate all vertices
+    // Translate All Vertices
     @Override
     public void translate(int dx, int dy) {
         vertexA.translate(dx, dy);
         vertexB.translate(dx, dy);
         vertexC.translate(dx, dy);
 
-        // Keep Shape.position synchronized with vertexA
         position = vertexA;
     }
 
-    // Display
+    // Display Info
     @Override
     public String display() {
         String msg = "Triangle\n";
